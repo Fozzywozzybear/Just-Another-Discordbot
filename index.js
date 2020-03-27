@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const axios = require(`axios`)
 const { prefix,token } = require('./config.json');
 const client = new Discord.Client();
 const fetch = require('node-fetch');
@@ -58,6 +59,27 @@ client.on('message', async message => {
         message.channel.send(embed);
 
         }
+        if ( command == `joke`){
+            let getJoke = async() => {
+                let response = await axios.get ('https://official-joke-api.appspot.com/random_joke')
+                let joke = response.data
+                return joke
+            }
+            let jokeValue = await getJoke();
+            console.log(jokeValue)
+            message.channel.send(`Here's your joke \n ${jokeValue.setup}\n\n ${jokeValue.punchline}`)
+        }
+        if ( command == `covid`){
+            let getCovid = async() => {
+                let response = await axios.get ('https://covid2019-api.herokuapp.com/v2/current')
+                let covid = response.data
+                return covid
+            }
+            let TotalValue = await getCovid();
+            console.log(TotalValue)
+            message.channel.send(TotalValue)
+        }
+
 });
 
 
