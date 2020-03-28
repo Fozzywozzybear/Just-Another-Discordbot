@@ -1,8 +1,9 @@
 {
-  "name": "covid19_bot",
+  "name": "fozzybot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "scripts": {"start": "node index.js"},
   "dependencies": {
     "@discordjs/opus": "^0.1.0",
     "axios": "^0.19.2",
@@ -13,9 +14,6 @@
     "ytdl-core": "^2.0.1"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
   "license": "ISC"
 }
