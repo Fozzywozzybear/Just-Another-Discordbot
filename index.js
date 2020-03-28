@@ -30,6 +30,9 @@ client.once('disconnect', () => {
     }
 })
 */
+client.login(process.env.BOT_TOKEN);
+
+
 /// The Api Function of tha app
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
