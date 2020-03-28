@@ -5,7 +5,8 @@ const client = new Discord.Client();
 const fetch = require('node-fetch');
 const trim = (str, max) => ((str.length > max) ? `${str.slice(0, max - 3)}...` : str);
 const querystring = require('querystring');
-
+const ytdl = require('ytdl-core');
+var servers = {};
 
 client.once('ready',() => {
     console.log('Ready to go')
@@ -21,12 +22,60 @@ client.once('ready',() => {
     }
 })
 */
-
+/// The Api Function of tha app
 client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-	const args = message.content.slice(prefix.length).split(/ +/);
-	const command = args.shift().toLowerCase();
+	//const args = message.content.slice(prefix.length).split(" ");
+    //const command = args.shift().toLowerCase();
+    let args = message.content.substring(prefix.length).split(" ");
+    
+    switch (args[0]){
+        case 'play':
+            function play(connection, message){
+                var server = servers[message.guild.id];
+                
+                server.dispatcher = connection.play(ytdl(server.queue[0], {filter: "audioonly"}));
+
+                server.queue.shift();
+
+                server.dispatcher.on("end",function(){
+                    if (server.queue[0]){
+                        play(connection,message);
+                    }else {
+                        connection.disconnect();
+                    }
+                    
+                });
+            
+            
+            }
+
+            if (!args[1]){
+                message.channel.send("You need a link to the song");
+                return;
+            }
+            if(!message.member.voice.channel){
+                message.channel.send("You must be in a channel to play a song")
+                return;
+            }
+            if(!servers[message.guild.id]) servers[message.guild.id] = {
+                queue: []
+            }
+
+            var server = servers[message.guild.id];
+
+            server.queue.push(args[1]);
+
+            if(!message.guild.voiceConnection) message.member.voice.channel.join().then(function(connection){
+                play(connection, message);
+            })
+
+
+
+        break;     
+
+    }
 
 	if (command === 'cat') {
         const { file } = await fetch('https://aws.random.cat/meow').then(response => response.json());
@@ -69,16 +118,7 @@ client.on('message', async message => {
             console.log(jokeValue)
             message.channel.send(`Here's your joke \n ${jokeValue.setup}\n\n ${jokeValue.punchline}`)
         }
-        if ( command == `covid`){
-            let getCovid = async() => {
-                let response = await axios.get ('https://covid2019-api.herokuapp.com/v2/current')
-                let covid = response.data
-                return covid
-            }
-            let TotalValue = await getCovid();
-            console.log(TotalValue)
-            message.channel.send(TotalValue)
-        }
+       
 
 });
 
