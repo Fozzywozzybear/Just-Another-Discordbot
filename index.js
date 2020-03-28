@@ -203,7 +203,8 @@ if (!serverQueue){
     return message.channel.send(`${song.title} has been added to the queue!`); 
 }
 
-function skip(message, serverQueue) {
+}
+function skip (message, serverQueue) {
     if (!message.member.voice.channel)
     return message.channel.send(
         "You have to be in a voice channel to stop the music!"
@@ -212,7 +213,7 @@ function skip(message, serverQueue) {
     return message.channel.send("There is no song that I could skip!");
     serverQueue.connection.dispatcher.end();
 }
-function stop(message, serverQueue) {
+function stop (message, serverQueue) {
     if (!message.member.voice.channel)
       return message.channel.send(
         "You have to be in a voice channel to stop the music!"
@@ -223,7 +224,7 @@ function stop(message, serverQueue) {
   function play(guild, song){
     const serverQueue = queue.get(guild.id);
     if (!song){
-        serverQueue.voice.channel.leave();
+        serverQueue.voiceChannel.leave();
         queue.delete(guild.id);
         return;
     }
@@ -235,8 +236,7 @@ function stop(message, serverQueue) {
     })
     .on("error", error => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-  serverQueue.textChannel.send(`Start playing: **${song.title}**`);
-}}
+  serverQueue.textChannel.send(`Start playing: **${song.title}**`);}
 
 
 
