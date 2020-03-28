@@ -31,7 +31,7 @@ client.once('disconnect', () => {
 })
 */
 // Used to log in to server.
-//client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN);
 
 
 /// The Api Function of tha app
