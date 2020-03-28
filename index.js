@@ -30,7 +30,8 @@ client.once('disconnect', () => {
     }
 })
 */
-client.login(process.env.BOT_TOKEN);
+// Used to log in to server.
+//client.login(process.env.BOT_TOKEN);
 
 
 /// The Api Function of tha app
@@ -52,8 +53,7 @@ client.on('message', async message => {
     else if (message.content.startsWith(`${prefix}stop`)){
         stop(message, serverQueue);
         return;
-    } else{
-        message.channel.send("you need to enter a valid command you clown")
+    } 
     }
     // let args = message.content.substring(prefix.length).split(" ");
     
