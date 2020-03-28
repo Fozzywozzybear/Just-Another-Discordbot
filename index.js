@@ -54,7 +54,7 @@ client.on('message', async message => {
         stop(message, serverQueue);
         return;
     } 
-    }
+    
     // let args = message.content.substring(prefix.length).split(" ");
     
     // switch (args[0]){
